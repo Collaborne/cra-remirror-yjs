@@ -6,10 +6,11 @@ import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
 
 import './App.css';
+import { Awareness } from 'y-protocols/awareness';
 
+const ydoc = new Doc();
 const webrtcProvider = (roomName: string, ydoc: Doc) => new WebrtcProvider(roomName, ydoc);
 const ROOM_NAME = 'cra-remirror-yjs-room';
-const ydoc = new Doc();
 
 const yjsExtension = new YjsExtension({
   getProvider: () => {
@@ -29,15 +30,14 @@ const yjsExtension = new YjsExtension({
 });
 
 function App() {
-  const { manager, onChange, state } = useRemirror({
+  const { manager } = useRemirror({
     extensions: () => [yjsExtension],
-    content: {"type":"doc","content":[{"type":"paragraph"}]},
   });
 
   return (
     <div className="App">
       <ThemeProvider>
-        <Remirror manager={manager} onChange={onChange} state={state}>
+        <Remirror manager={manager}>
           <EditorComponent />
         </Remirror>
       </ThemeProvider>
