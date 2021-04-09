@@ -15,6 +15,14 @@ const ROOM_NAME = 'cra-remirror-yjs-room';
 const yjsExtension = new YjsExtension({
   getProvider: () => {
     const webrtc = webrtcProvider(ROOM_NAME, ydoc);
+    const awareness = webrtc.awareness;
+    awareness.on('change', () => {
+      console.log(Array.from(awareness.getStates().values()))
+    });
+    awareness.setLocalStateField('user', {
+      name: `user-${Math.round(10000 * Math.random())}`,
+      objectId: Math.round(10000 * Math.random()),
+    });
 
     return {
       awareness: webrtc.awareness,
